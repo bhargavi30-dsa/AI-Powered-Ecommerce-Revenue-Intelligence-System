@@ -1,3 +1,4 @@
+import pandas as pd
 #It calculates actual discount given,this will help the companies to know the gross margin
 def calculate_discount_amount(df):
     df['discounted_amount']=df['listed_price']-df['current/discounted_price']
@@ -17,6 +18,19 @@ def calculate_demand_score(df):
 def calculate_revenue(df):
     df['estimated_revenue']=df['current/discounted_price']*df['bought_in_last_month']
     return df
+#grouping current/discounted_price to categories like budget,mid-range,premium
+def create_price_category(df):
+    def get_category(price):
+        if pd.isna(price):
+            return 'Unknown'
+        elif price<25:
+            return 'Budget'
+        elif price<125:
+            return 'Mid-range'
+        else:
+            return 'Premium'
+    df['price_category']=df['current/discounted_price'].apply(get_category)
+    return df    
 #calculating all at a time
 def engineer_all_features(df):
     df=calculate_discount_amount(df)
@@ -24,6 +38,8 @@ def engineer_all_features(df):
     df=calculate_value_score(df)
     df=calculate_demand_score(df)
     df=calculate_revenue(df)
+    df=create_price_category(df)
     #returns complete featured dataframe
     return df
-       
+
+
