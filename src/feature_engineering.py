@@ -30,7 +30,13 @@ def create_price_category(df):
         else:
             return 'Premium'
     df['price_category']=df['current/discounted_price'].apply(get_category)
-    return df    
+    return df   
+#calculating revenue leakage
+def calculate_revenue_leakage(df):
+    potential_revenue=df['listed_price']*df['bought_in_last_month']
+    actual_revenue=df['estimated_revenue']
+    df['Revenue_leakage_pct']=((potential_revenue-actual_revenue)/potential_revenue)%100
+    return df
 #calculating all at a time
 def engineer_all_features(df):
     df=calculate_discount_amount(df)
@@ -39,6 +45,7 @@ def engineer_all_features(df):
     df=calculate_demand_score(df)
     df=calculate_revenue(df)
     df=create_price_category(df)
+    df=calculate_revenue_leakage(df)
     #returns complete featured dataframe
     return df
 
