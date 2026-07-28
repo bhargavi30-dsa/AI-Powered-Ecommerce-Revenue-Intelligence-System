@@ -35,7 +35,9 @@ def create_price_category(df):
 def calculate_revenue_leakage(df):
     potential_revenue=df['listed_price']*df['bought_in_last_month']
     actual_revenue=df['estimated_revenue']
-    df['Revenue_leakage_pct']=((potential_revenue-actual_revenue)/potential_revenue)%100
+    leakage_revenue=((potential_revenue-actual_revenue)/potential_revenue)*100
+    df['revenue_leakage_pct']=leakage_revenue.clip(lower=0)
+    df['premium_price_flag']=(leakage_revenue<0).astype(int)
     return df
 #calculating all at a time
 def engineer_all_features(df):
