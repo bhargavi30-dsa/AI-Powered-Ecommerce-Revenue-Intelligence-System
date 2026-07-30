@@ -70,3 +70,36 @@ Low score  → either low rating OR few reviews
 High score → high rating AND many reviews
              = most trustworthy product!
 
+## 📊 Exploratory Data Analysis
+
+### Chart 1: Price Distribution of Amazon Electronics
+
+![Price Distribution](outputs/charts/price_distribution.png)
+
+**Plot Details:**
+- Chart Type: Histogram (bins=50)
+- Column: current/discounted_price
+- Reference Lines: Mean ($168.52) and Median ($77.00)
+
+**Distribution Type:**
+Heavily Right Skewed (Positive Skew)
+
+**Analysis:**
+Majority of products concentrated in $0-$200 range 
+with 28,000+ products in lowest price bin. Mean ($168.52) 
+is significantly higher than Median ($77.00) with a gap 
+of $91.52 caused by luxury products ($2,000-$4,500) 
+pulling mean artificially rightward. Median better 
+represents true center of data confirming correct 
+decision to use median strategy for missing value imputation.
+
+**Business Insights:**
+- Amazon electronics catalog dominated by budget 
+  to mid-range products ($0-$200)
+- Three natural price clusters identified:
+  Mass market ($0-$200) | Mid-premium ($200-$500) | Luxury ($500+)
+- Premium segment ($1,000+) significantly underserved
+  representing potential business opportunity
+- Mean price ($168.52) is misleading — Median ($77.00) 
+  better represents typical Amazon electronics price             
+
