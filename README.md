@@ -103,3 +103,25 @@ decision to use median strategy for missing value imputation.
 - Mean price ($168.52) is misleading — Median ($77.00) 
   better represents typical Amazon electronics price             
 
+### Chart 1: Price Distribution of Amazon Electronics
+
+![Price Distribution](outputs/charts/rating_distribution.png)
+
+**Plot Details:**
+- Chart Type: Histogram (bins=20)
+- Column: rating
+- Reference Lines: Mean (4.40) and Median (4.50)
+
+**Distribution Type:**
+Left Skewed
+
+**Analysis:**
+1.90% of the products are rated above 4.0 indicating that high customer satisfaction
+2.14000+ reviews are positive(peak at 4.7)
+
+**Business Insights:**
+Implication for pricing:
+ → Rating alone NOT enough differentiator
+ → Need review_credibility score
+   to distinguish truly trustworthy products!"
+
