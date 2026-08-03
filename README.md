@@ -103,7 +103,7 @@ decision to use median strategy for missing value imputation.
 - Mean price ($168.52) is misleading — Median ($77.00) 
   better represents typical Amazon electronics price             
 
-### Chart 1: Price Distribution of Amazon Electronics
+### Chart 2: Rating Distribution of Amazon Electronics
 
 ![Price Distribution](outputs/charts/rating_distribution.png)
 
@@ -124,4 +124,33 @@ Implication for pricing:
  → Rating alone NOT enough differentiator
  → Need review_credibility score
    to distinguish truly trustworthy products!"
+
+### chart 3: Revenue Leakage Distribution
+**Distribution Type:**
+Right Skewed 
+
+**Chart Analysis:**
+Tall bar at 0%:
+→ 23,000+ products have ZERO leakage
+→ More than half the catalog!
+→ No discount being given!
+
+Remaining products (0-90% leakage):
+→ Spread across all leakage levels
+→ Some products losing 80-90% revenue!
+→ Those are critical cases! 🔴
+
+**Business Insights:**
+"55%+ of Amazon electronics catalog
+ shows zero revenue leakage indicating
+ products are either optimally priced
+ or premium priced above listed price.
+
+ However remaining 45% show varying
+ levels of revenue leakage with some
+ extreme cases losing up to 93% revenue
+ through aggressive discounting —
+ these represent immediate repricing
+ opportunities worth millions!" 🔥
+
 
