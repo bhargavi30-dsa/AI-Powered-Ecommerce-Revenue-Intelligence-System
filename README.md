@@ -267,4 +267,35 @@ Implication for pricing:
 - Strong multicollinearity detected between
   several engineered features  
 
+### Used Three models for better evaluation measures comparison
+## Final Insight:
+Three machine learning models—Decision Tree, Random Forest, and XGBoost—were evaluated for predicting discounted product prices. After comparing MAE, MSE, RMSE, and R², the manually tuned Random Forest Regressor achieved the best performance (R² = 0.832). Feature importance analysis further identified the key factors influencing pricing, making the model both accurate and interpretable for e-commerce pricing decisions.  
 
+### Plotted Scatter Plot to analyze the actual and predicted values
+# Observation:
+The Actual vs Predicted plot shows that the Random Forest model predicts low- and medium-priced products with good accuracy, as many observations lie close to the ideal prediction line. However, the model tends to underestimate high-priced products. This behavior is likely due to the imbalanced price distribution, where premium products are underrepresented compared to budget and mid-range products. Despite this limitation, the model achieved a strong R² score of 0.832, indicating good overall predictive performance.
+
+## Model Trained
+Trained model using decision tree algorithm as the baseline and then compared its performance with randomforest and XGBoost.Saved the model with random forest algorithm as it has better performance than other models.
+
+## Saved feature_columns in .pxl file
+feature_columns.pkl is saved to preserve the exact feature names and their order used during model training. During deployment, the API loads this file and rearranges the incoming user input accordingly before sending it to the trained model. This guarantees consistent and reliable predictions.
+User Input
+      │
+      ▼
+API receives product details
+      │
+      ▼
+Load feature_columns.pkl
+      │
+      ▼
+Arrange input features in the same order
+      │
+      ▼
+Load pricing_model.pkl
+      │
+      ▼
+Model predicts price
+      │
+      ▼
+Return predicted price
