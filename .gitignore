@@ -4,5 +4,5 @@ env/
 .env
 __pycache__/
 *.pkl
+*.pkl
 data/
-outputs/
