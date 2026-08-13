@@ -1,0 +1,8 @@
+ecommerce_env/
+venv/
+env/
+.env
+__pycache__/
+*.pkl
+data/
+outputs/

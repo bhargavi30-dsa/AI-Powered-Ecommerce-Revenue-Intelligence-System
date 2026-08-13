@@ -269,7 +269,55 @@ Implication for pricing:
 
 ### Used Three models for better evaluation measures comparison
 ## Final Insight:
-Three machine learning models—Decision Tree, Random Forest, and XGBoost—were evaluated for predicting discounted product prices. After comparing MAE, MSE, RMSE, and R², the manually tuned Random Forest Regressor achieved the best performance (R² = 0.832). Feature importance analysis further identified the key factors influencing pricing, making the model both accurate and interpretable for e-commerce pricing decisions.  
+Three machine learning models—Decision Tree, Random Forest, and XGBoost—were evaluated for predicting discounted product prices. After comparing MAE, MSE, RMSE, and R², the manually tuned Random Forest Regressor achieved the best performance (R² = 0.832). Feature importance analysis further identified the key factors influencing pricing, making the model both accurate and interpretable for e-commerce pricing decisions. 
+
+### Feature Importance Analysis
+
+![Feature Importance](images/feature_importance.png)
+
+**Top Predictors of Amazon Electronics Price:**
+1. review_credibility (38%) — MOST IMPORTANT!
+2. number_of_reviews (31%)
+3. rating (16%)
+4. bought_in_last_month (5%)
+5. listed_price (4%)
+
+**Key Finding:**
+Review-based features (review_credibility +
+number_of_reviews + rating) collectively 
+explain 85% of pricing variation!
+
+**Business Insight:**
+Trust metrics are the PRIMARY driver of 
+Amazon electronics pricing. Products with 
+higher ratings AND more reviews command 
+significantly higher prices — customer 
+TRUST directly translates to PRICING POWER!
+
+Binary features (is_best_seller, is_couponed,
+sustainability_badges) show near-zero importance
+suggesting they have minimal influence on 
+actual pricing decisions.
+
+## Model Optimization — Feature Reduction
+
+During feature importance analysis, three features 
+showed near-zero predictive power for electronics pricing:
+
+→ is_best_seller      (~0% importance)
+→ is_couponed         (~0% importance)  
+→ sustainability_badges (~0% importance)
+
+These features were removed to:
+→ Reduce model complexity
+→ Eliminate noise from predictions
+→ Improve generalization on unseen data
+→ Follow principle of parsimony 
+  (simpler model = better model!)
+
+Model was retrained with 7 remaining features
+and evaluated to compare performance
+before and after feature reduction.
 
 ### Plotted Scatter Plot to analyze the actual and predicted values
 # Observation:
