@@ -28,7 +28,7 @@ def load_data():
     df = engineer_all_features(df)
     return df
 
-@st.cache_resource
+# @st.cache_resource
 def load_model():
     model = joblib.load(
         os.path.join(BASE_DIR, 'outputs', 'models', 'rf_model.pkl'))
@@ -39,6 +39,14 @@ def load_model():
 df = load_data()
 model, scaler = load_model()
 
+st.write("MODEL FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'rf_model.pkl'))
+st.write("SCALER FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'scaler.pkl'))
+
+st.write("SCALER FEATURES:")
+st.write(scaler.feature_names_in_.tolist())
+
+st.write("Model expects:")
+st.write(model.n_features_in_)
 # Sidebar navigation
 st.sidebar.title("🔍 Navigation")
 page = st.sidebar.selectbox("Choose Page:", [
