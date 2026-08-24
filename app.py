@@ -39,14 +39,14 @@ def load_model():
 df = load_data()
 model, scaler = load_model()
 
-st.write("MODEL FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'rf_model.pkl'))
-st.write("SCALER FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'scaler.pkl'))
+# st.write("MODEL FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'rf_model.pkl'))
+# st.write("SCALER FILE:", os.path.join(BASE_DIR, 'outputs', 'models', 'scaler.pkl'))
 
-st.write("SCALER FEATURES:")
-st.write(scaler.feature_names_in_.tolist())
+# st.write("SCALER FEATURES:")
+# st.write(scaler.feature_names_in_.tolist())
 
-st.write("Model expects:")
-st.write(model.n_features_in_)
+# st.write("Model expects:")
+# st.write(model.n_features_in_)
 # Sidebar navigation
 st.sidebar.title("🔍 Navigation")
 page = st.sidebar.selectbox("Choose Page:", [
@@ -167,4 +167,114 @@ elif page == "💰 Price Predictor":
         features_scaled = scaler.transform(features)
         predicted_price = model.predict(features_scaled)[0]
         
-        st.success(f"💰 Recommended Price: ${predicted_price:.2f}")        
+        st.success(f"💰 Recommended Price: ${predicted_price:.2f}") 
+elif page == "🤖 AI Insights":
+    st.header("🤖 AI Powered Pricing Insights")
+    st.write("Get AI generated pricing strategy for your product!")
+    
+    st.divider()
+    
+    # Input section
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        product_name = st.text_input(
+            "📦 Product Name:", 
+            placeholder="e.g. Wireless Bluetooth Earphones")
+        current_price = st.number_input(
+            "💰 Current Price ($):", 
+            min_value=0.0, max_value=5000.0, value=99.0)
+        rating = st.slider(
+            "⭐ Product Rating:", 
+            1.0, 5.0, 4.0, 0.1)
+    
+    with col2:
+        category = st.selectbox(
+            "📂 Price Category:", 
+            ["Budget", "Mid-range", "Premium"])
+        reviews = st.number_input(
+            "📝 Number of Reviews:", 
+            min_value=0, max_value=100000, value=1000)
+        bought_last_month = st.number_input(
+            "🛒 Bought Last Month:", 
+            min_value=0, max_value=100000, value=500)
+    
+    st.divider()
+    
+    # Generate insights button
+    if st.button("🔮 Generate AI Pricing Insights"):
+        
+        # Show loading spinner
+        with st.spinner("🤖 Analyzing product pricing..."):
+            
+            try:
+                from groq import Groq
+                from dotenv import load_dotenv
+                load_dotenv()
+                
+                # Initialize Groq client
+                client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+                
+                # Build prompt
+                prompt = f"""
+                You are an expert e-commerce pricing analyst for Amazon.
+                
+                Analyze this electronics product:
+                - Product: {product_name}
+                - Current Price: ${current_price}
+                - Category: {category}
+                - Rating: {rating}/5.0
+                - Number of Reviews: {reviews:,}
+                - Units Bought Last Month: {bought_last_month:,}
+                
+                Provide a structured analysis with:
+                1. Pricing Status (Underpriced/Overpriced/Optimal)
+                2. Recommended Price Range
+                3. Key Pricing Factors (3 points)
+                4. Revenue Opportunity
+                5. Action Plan (2-3 specific steps)
+                
+                Be specific, data-driven and actionable!
+                Keep response under 300 words.
+                """
+                
+                # Call Groq API
+                response = client.chat.completions.create(
+                    model="openai/gpt-oss-120b",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are an expert e-commerce pricing strategist with deep knowledge of Amazon electronics market."
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt
+                        }
+                    ],
+                    max_tokens=500,
+                    temperature=0.7
+                )
+                
+                # Display response
+                insights = response.choices[0].message.content
+                
+                st.success("✅ Analysis Complete!")
+                st.divider()
+                
+                st.markdown("### 📊 AI Pricing Analysis:")
+                st.markdown(insights)
+                
+                st.divider()
+                
+                # Quick metrics
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Current Price", f"${current_price:.2f}")
+                with col2:
+                    st.metric("Rating", f"⭐ {rating}/5.0")
+                with col3:
+                    st.metric("Monthly Sales", f"{bought_last_month:,} units")
+                    
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+                st.info("Please check your GROQ_API_KEY in .env file!")               
